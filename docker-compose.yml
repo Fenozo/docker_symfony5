@@ -1,0 +1,26 @@
+version: "3.3"
+services:
+    php-fpm:
+        build: ./
+        container_name: s5
+        ports:
+            - "5000:8000"
+        volumes:
+            - ./:/var/www/html
+    myql:
+        container_name: mysql_for_symfony_5
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        environment: 
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: test
+        volumes:
+            - mysql-data:/var/lib/mysql
+    sadminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8060:8080
+volumes:
+    mysql-data:
